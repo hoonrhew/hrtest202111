@@ -56,7 +56,7 @@ public class UserDao {
                         rs.getString("password")),
                 getUserParams);
     }
-    
+
 
     public int createUser(PostUserReq postUserReq){
         String createUserQuery = "insert into UserInfo (id, userIdx, username, first_name, last_name, address, is_delted, created_at, updated_at, email, password) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
@@ -90,7 +90,7 @@ public class UserDao {
         return this.jdbcTemplate.queryForObject(getPwdQuery,
                 (rs,rowNum)-> new User(
                         rs.getInt("userIdx"),
-                        rs.getInt("ID"),
+                        rs.getString("ID"),
                         rs.getString("userName"),
                         rs.getString("password"),
                         rs.getString("email")
