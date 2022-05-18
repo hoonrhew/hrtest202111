@@ -1,11 +1,9 @@
-package com.example.demo.src.user;
+package com.example.demo.src.orders;
 
 
 import com.example.demo.config.BaseException;
-import com.example.demo.config.BaseResponseStatus;
-import com.example.demo.src.user.model.*;
+import com.example.demo.src.orders.model.*;
 import com.example.demo.utils.JwtService;
-import com.example.demo.utils.SHA256;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,74 +15,53 @@ import static com.example.demo.config.BaseResponseStatus.*;
 
 //Provider : Read의 비즈니스 로직 처리
 @Service
-public class UserProvider {
+public class OrdersProvider {
 
-    private final UserDao userDao;
+    private final com.example.demo.src.orders.OrdersDao OrdersDao;
     private final JwtService jwtService;
 
 
     final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    public UserProvider(UserDao userDao, JwtService jwtService) {
-        this.userDao = userDao;
+    public OrdersProvider(com.example.demo.src.orders.OrdersDao OrdersDao, JwtService jwtService) {
+        this.OrdersDao = OrdersDao;
         this.jwtService = jwtService;
     }
 
-    public List<GetUserRes> getUsers() throws BaseException{
+    public List<GetOrdersRes> getOrders() throws BaseException{
         try{
-            List<GetUserRes> getUserRes = userDao.getUsers();
-            return getUserRes;
+            List<GetOrdersRes> getOrdersRes = OrdersDao.getOrders();
+            return getOrdersRes;
         }
         catch (Exception exception) {
             throw new BaseException(DATABASE_ERROR);
         }
     }
 
-    public List<GetUserRes> getUsersByEmail(String email) throws BaseException{
+    public List<GetOrdersRes> getOrdersByid(int id) throws BaseException{
         try{
-            List<GetUserRes> getUsersRes = userDao.getUsersByEmail(email);
-            return getUsersRes;
+            List<GetOrdersRes> getOrderByid = OrdersDao.getOrdersByid(id);
+            return getOrderByid;
         }
         catch (Exception exception) {
             throw new BaseException(DATABASE_ERROR);
         }
     }
 
-    //public GetOrderByUserRes retrieveOrderByUser(int userIdxByJwt, int userIdx) throws BaseException{
-    public GetUserInfoRes retrieveOrderByUser(int userIdxByJwt, int userIdx) throws BaseException{
-        Boolean isMyOrder = true;
 
-        if(checkUserExits(userIdx)==0){
-            throw new BaseException(USERS_EMPTY_USER_ID);
-        }
-        try{
-            if(userIdxByJwt != userIdx)
-                isMyOrder = false;
-            GetUserInfoRes getUserInfoRes = userDao.selectUserInfo(userIdx);
-            //List<GetUserOrderRes> getUserOrderRes = userDao.selectUserOrder(userIdx);
-
-            //GetOrderByUserRes getOrderByUser2 = new GetOrderByUserRes(isMyOrder, getUserInfoRes, getUserOrderRes);
-            //return getOrderByUser2;
-            return getUserInfoRes;
-        }
-        catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR2);
-        }
-    }
-
-    public GetUserRes getUser(int userIdx) throws BaseException {
+    public GetOrdersRes getOrder(int id) throws BaseException {
         try {
-            GetUserRes getUserRes = userDao.getUser(userIdx);
-            return getUserRes;
+            GetOrdersRes getOrderRes = OrdersDao.getOrder(id);
+            return getOrderRes;
         } catch (Exception exception) {
             throw new BaseException(DATABASE_ERROR);
         }
     }
-
+/*
     public int checkEmail(String email) throws BaseException{
         try{
-            return userDao.checkEmail(email);
+            return OrdersDao.checkEmail(email);
         } catch (Exception exception){
             throw new BaseException(DATABASE_ERROR2);
         }
@@ -92,14 +69,14 @@ public class UserProvider {
 
     public int checkUserExits(int userIdx) throws BaseException{
         try{
-            return userDao.checkUserExists(userIdx);
+            return OrdersDao.checkUserExists(userIdx);
         } catch (Exception exception){
             throw new BaseException(DATABASE_ERROR3);
         }
     }
 
     public PostLoginRes logIn(PostLoginReq postLoginReq) throws BaseException{
-        User user = userDao.getPwd(postLoginReq);
+        User user = OrdersDao.getPwd(postLoginReq);
         String encryptPwd;
         try {
             encryptPwd=new SHA256().encrypt(postLoginReq.getPassword());
@@ -117,5 +94,5 @@ public class UserProvider {
         }
 
     }
-
+*/
 }

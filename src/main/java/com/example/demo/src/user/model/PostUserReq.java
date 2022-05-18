@@ -15,6 +15,7 @@ public class PostUserReq {
 
 
     private int id;
+    private int userIdx;
     private String UserName;
     private String first_name;
     private String last_name;

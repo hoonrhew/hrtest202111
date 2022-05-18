@@ -1,5 +1,4 @@
-package com.example.demo.src.user.model;
-
+package com.example.demo.src.orders.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,10 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class GetUserRes {
-    private int userIdx;
-    private String UserName;
+public class PostLoginReq {
     private int id;
-    private String email;
     private String password;
 }

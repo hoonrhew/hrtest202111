@@ -79,6 +79,23 @@ public class UserController {
 
     }
 
+    /* Get Order per User */
+    @ResponseBody
+    @GetMapping("/orderbyuser/{userIdx}")
+    //public BaseResponse<GetOrderByUserRes> getOrderByUser(@PathVariable("userIdx") int userIdx) {
+    public BaseResponse<GetUserInfoRes> getUserInfo(@PathVariable("userIdx") int userIdx) {
+        // Get Users
+        try{
+            //GetOrderByUserRes getOrderByUserRes = userProvider.retrieveOrderByUser(userIdx, userIdx);
+            GetUserInfoRes getUserInfoRes = userProvider.retrieveOrderByUser(userIdx, userIdx);
+            //return new BaseResponse<>(getOrderByUserRes);
+            return new BaseResponse<>(getUserInfoRes);
+        } catch(BaseException exception){
+            return new BaseResponse<>((exception.getStatus()));
+        }
+
+    }
+
     /**
      * 회원가입 API
      * [POST] /users
@@ -126,17 +143,19 @@ public class UserController {
      * [PATCH] /users/:userIdx
      * @return BaseResponse<String>
      */
+    /*
     @ResponseBody
+
     @PatchMapping("/{userIdx}")
     public BaseResponse<String> modifyUserName(@PathVariable("userIdx") int userIdx, @RequestBody User user){
         try {
-            //jwt에서 idx 추출.
+
             int userIdxByJwt = jwtService.getUserIdx();
             //userIdx와 접근한 유저가 같은지 확인
             if(userIdx != userIdxByJwt){
                 return new BaseResponse<>(INVALID_USER_JWT);
             }
-            //같다면 유저네임 변경
+
             PatchUserReq patchUserReq = new PatchUserReq(userIdx,user.getUserName());
             userService.modifyUserName(patchUserReq);
 
@@ -146,6 +165,6 @@ public class UserController {
             return new BaseResponse<>((exception.getStatus()));
         }
     }
-
+    */
 
 }
